@@ -1,0 +1,157 @@
+<html>
+    <head>
+        <title>
+            Scramble Words
+        </title>
+        <link type="stylesheet" href="rps.css">
+        <style>
+            *{
+        margin: 0;
+        padding: 0%;
+        box-sizing: border-box;
+        }
+        body{
+        background-color: grey;
+        }
+    
+        h1{
+            letter-spacing: 5px;
+            font-size: 2.5rem;
+        }
+        header
+        {
+        text-align: center;
+        text-shadow: 1px 3px 3px ;
+        color: white;
+        font-weight: bold;
+        display: flex;
+        font-size: larger;
+        justify-content: center;
+        align-items: center;
+        background-color: grey;
+        height: 15vh;
+        }
+        section
+        {
+        height: 85vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+        }
+        .btn{
+        color: black;
+        background-color: white;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        margin-top: 5%;
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+        }
+        .btn:hover{
+            letter-spacing: 0.125rem;
+            word-spacing: 0.2rem;
+            transition: 0.4s;
+        }
+        .game{
+            width: 50%;
+            height: 400px;
+            padding: 20px 0;
+            background-color: grey;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 6px -6px grey;
+        }
+        h3{
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        input{
+            padding: 15px 0;
+            width: 50%;
+            text-align: center;
+            border-radius: 25px;
+            border: none;
+            margin: 2rem 0;
+            font-size: 1.1rem;
+        }
+        .hidden{
+            display: none;
+        }
+
+        
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>
+                Word Scramble Game
+            </h1>
+        </header>
+        <section>
+            <div class="game">
+                <h3 class="msg"></h3>
+                <input type="text" class="hidden">
+                <button class="btn">Click Here To Start</button>
+            </div>
+        </section>
+        <script>
+            const msg=document.querySelector('.msg');
+            const input=document.querySelector('input');
+            const but=document.querySelector('.btn');
+            let play=false;
+            let wordnew="";
+            let jumble="";
+            let words=['c++','python','java','mysql','reactjs','nodejs','expressjs','javascript','css','html','php','angular','jquery','mongodb'
+            ,'android'];
+            //create words
+            const creates=()=>{
+                let ran=Math.floor(Math.random()*words.length);
+                return words[ran];
+            }
+            //shuffling words
+            const scramble=(arr)=>{
+                for(var i=arr.length-1;i>0;i--)
+                {
+                    let t=arr[i];
+                    let j=Math.floor(Math.random()*arr.length);
+                    arr[i]=arr[j];
+                    arr[j]=t;
+                }
+                return arr;
+            }
+
+            but.addEventListener('click',function(){
+                if(!play)
+                {
+                    but.innerHTML='Guess';
+                    play=true;
+                    input.classList.toggle('hidden');
+                    wordnew=creates();
+                    jumble=scramble(wordnew.split('')).join('');
+                    msg.innerHTML=`Guess word : ${jumble}`;
+                }    
+                else{
+                    let user=input.value;
+                    if(user===wordnew)
+                    {
+                        play=false;     //to start again
+                        but.innerHTML="Start Again !";
+                        msg.innerHTML=`Congrats!!! You are Correct. Word is : ${wordnew}`;
+                        input.classList.toggle('hidden');
+                        input.value="";
+                    }
+                    else{
+                        but.innerHTML="Start Again !";
+                        msg.innerHTML=`OOps!!! You are Incorrect .Word is : ${wordnew}`;
+                        input.value="";
+                    }
+                }     
+            })
+        </script>
+    </body>
+</html>
